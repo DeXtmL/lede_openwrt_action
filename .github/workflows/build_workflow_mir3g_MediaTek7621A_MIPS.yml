@@ -45,6 +45,11 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        echo "checking config file..."
+        if [ ! -f $CONFIG_FILE ]; then
+          echo "$CONFIG_FILE not found. Aborting ..."
+          exit 1
+        fi
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
